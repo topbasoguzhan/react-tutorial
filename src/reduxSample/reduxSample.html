@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Redux basic example</title>
+    <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <p>
+            Clicked: <span id="value">0</span> times
+            <button id="increment">+</button>
+            <button id="decrement">-</button>
+        </p>
+        <h1 id="value2"></h1>
+    </div>
+    <script>
+        function counter(state, action) {
+            if (typeof state === 'undefined') {
+                return 0
+            }
+
+            switch (action.type) {
+                case 'INCREMENT':
+                    return state + 1
+                case 'DECREMENT':
+                    return state - 1
+                default:
+                    return state
+            }
+        }
+
+        var store = Redux.createStore(counter)
+
+        function render() {
+            document.getElementById('value').innerHTML = store.getState().toString()
+        }
+
+
+        function renderH2(){
+            document.getElementById('value2').innerHTML = store.getState().toString()
+        }
+
+        render()
+
+        store.subscribe(render)
+        store.subscribe(renderH2)
+
+
+        document.getElementById('increment')
+            .addEventListener('click', function () {
+
+                store.dispatch({ type: 'INCREMENT' })
+
+            })
+
+        document.getElementById('decrement')
+            .addEventListener('click', function () {
+                store.dispatch({ type: 'DECREMENT' })
+            })
+
+
+
+    </script>
+</body>
+
+</html>
